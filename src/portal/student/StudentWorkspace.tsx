@@ -25,6 +25,7 @@ import {
   Activity
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import { useUniversityData } from '../../context/UniversityDataContext';
 import { RbacDenialModal } from '../common/RbacDenialModal';
 import { RequestFlowModal } from '../common/RequestFlowModal';
@@ -54,6 +55,7 @@ type StudentTab =
   | 'services';
 
 export const StudentWorkspace: React.FC<{ onOpenArchitecture?: () => void }> = ({ onOpenArchitecture }) => {
+  const navigate = useNavigate();
   const { currentUser, logout, switchDemoUser } = useAuth();
   const {
     studentProfile,
@@ -303,20 +305,29 @@ export const StudentWorkspace: React.FC<{ onOpenArchitecture?: () => void }> = (
           <div className="text-[10px] font-mono uppercase text-slate-500">Quick Role Switch:</div>
           <div className="grid grid-cols-2 gap-1.5 text-[11px] font-mono">
             <button
-              onClick={() => switchDemoUser('FACULTY')}
+              onClick={() => {
+                switchDemoUser('FACULTY');
+                navigate('/portal/faculty');
+              }}
               className="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-[#B45309] dark:text-amber-300 text-center transition font-semibold"
             >
               Faculty
             </button>
             <button
-              onClick={() => switchDemoUser('ADMINISTRATOR')}
+              onClick={() => {
+                switchDemoUser('ADMINISTRATOR');
+                navigate('/dashboard');
+              }}
               className="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-[#6D28D9] dark:text-rose-300 text-center transition font-semibold"
             >
               Admin
             </button>
           </div>
           <button
-            onClick={logout}
+            onClick={() => {
+              logout();
+              navigate('/login', { replace: true });
+            }}
             className="w-full py-1.5 px-3 rounded-lg bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/30 dark:hover:bg-rose-900/50 text-[#B91C1C] dark:text-rose-300 text-xs font-semibold border border-rose-200 dark:border-rose-800/30 transition text-center"
           >
             Sign Out

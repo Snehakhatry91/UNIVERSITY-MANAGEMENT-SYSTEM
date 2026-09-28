@@ -13,9 +13,11 @@ import {
   GraduationCap, 
   CreditCard,
   ChevronRight,
-  Sparkles
+  Sparkles,
+  Info
 } from 'lucide-react';
 import { NavItem } from '../common/Sidebar';
+import { useAuth } from '../../context/AuthContext';
 
 interface DashboardViewProps {
   onNavigate: (tab: NavItem) => void;
@@ -28,6 +30,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   onOpenRequestSim, 
   onOpenPortal 
 }) => {
+  const { currentUser } = useAuth();
   const [selectedFlowComponent, setSelectedFlowComponent] = useState<string | null>(null);
 
   // Dynamic greeting based on current local hour
@@ -89,14 +92,17 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8 shadow-xs relative overflow-hidden">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
             <div className="space-y-1.5">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#ECFDF5] dark:bg-emerald-950/60 text-[#059669] dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/40">
-                  Production Hybrid Cloud · ap-south-1
+                  Educational Hybrid Cloud Simulation · ap-south-1 (Simulated)
+                </span>
+                <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/40 font-mono">
+                  Role: {currentUser?.role || 'Guest'}
                 </span>
                 <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">CVGU-UMS-v2.4</span>
               </div>
               <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                {getGreeting()}, Administrator
+                {getGreeting()}, {currentUser?.fullName || 'Cloud User'}
               </h1>
               <p className="text-xs md:text-sm text-slate-600 dark:text-slate-400 font-medium">
                 C. V. Raman Global University · University Cloud Management System
@@ -106,7 +112,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <div className="flex items-center gap-2.5">
               <button
                 onClick={onOpenRequestSim}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#2563EB] hover:bg-blue-700 text-white font-semibold text-xs transition shadow-sm"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#2563EB] hover:bg-blue-700 text-white font-semibold text-xs transition shadow-sm cursor-pointer"
               >
                 <Sparkles className="w-4 h-4 fill-current" />
                 <span>Simulate Request</span>
@@ -114,7 +120,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               {onOpenPortal && (
                 <button
                   onClick={onOpenPortal}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:hover:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 font-semibold text-xs border border-emerald-200 dark:border-emerald-800/40 transition shadow-xs"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:hover:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 font-semibold text-xs border border-emerald-200 dark:border-emerald-800/40 transition shadow-xs cursor-pointer"
                   title="Open live Student, Faculty, or Admin workspace"
                 >
                   <GraduationCap className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
@@ -123,12 +129,25 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               )}
               <button
                 onClick={() => onNavigate('cad')}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold text-xs border border-slate-200 dark:border-slate-700 transition"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold text-xs border border-slate-200 dark:border-slate-700 transition cursor-pointer"
               >
                 <Layers className="w-4 h-4 text-slate-500 dark:text-slate-400" />
                 <span>CAD Blueprint</span>
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* 12 Requirements vs 15 Security Controls Clarification Notice */}
+        <div className="p-4 rounded-xl bg-blue-50/60 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/40 text-xs flex items-start gap-3">
+          <Info className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <span className="font-bold text-slate-900 dark:text-white">
+              Dual Compliance Architecture Model:
+            </span>
+            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+              12 mandatory case-study requirements + 15 supporting security controls. Both systems are maintained independently: the 12 case-study specifications govern core hybrid topology, edge caching, and IAM federation, while the 15 controls enforce defense-in-depth security policies.
+            </p>
           </div>
         </div>
 
@@ -138,8 +157,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <h2 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 font-mono">
               System Summary &amp; Compliance Status
             </h2>
-            <span className="text-xs text-[#059669] dark:text-emerald-400 font-semibold flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" /> Live Status: Healthy
+            <span className="text-xs text-[#059669] dark:text-emerald-400 font-semibold flex items-center gap-1 font-mono">
+              <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" /> Simulation Status: Simulated Components Healthy
             </span>
           </div>
 
@@ -160,7 +179,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 <div className="text-[11px] text-[#059669] dark:text-emerald-400 font-medium">Case Study Satisfied</div>
               </div>
               <span className="text-[10px] text-blue-600 dark:text-blue-400 font-medium flex items-center gap-0.5">
-                Audit Verified <ChevronRight className="w-3 h-3" />
+                Internal Validation <ChevronRight className="w-3 h-3" />
               </span>
             </div>
 

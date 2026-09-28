@@ -4,13 +4,15 @@ import {
   Bell, 
   Sparkles, 
   ChevronRight, 
-  CheckCircle2,
-  GraduationCap,
-  Sun,
-  Moon
+  CheckCircle2, 
+  GraduationCap, 
+  Sun, 
+  Moon,
+  LogOut
 } from 'lucide-react';
 import { NavItem } from './Sidebar';
 import { useTheme } from '../../context/ThemeContext';
+import { useAuth } from '../../context/AuthContext';
 
 interface NavbarProps {
   activeTab: NavItem;
@@ -24,13 +26,14 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ 
   activeTab, 
   onOpenValidation, 
-  onOpenRequestSim,
+  onOpenRequestSim, 
   onOpenPortal,
   onOpenProfile 
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const { currentUser, logout } = useAuth();
 
   const tabTitles: Record<NavItem, string> = {
     dashboard: 'Dashboard',
@@ -49,26 +52,36 @@ export const Navbar: React.FC<NavbarProps> = ({
   const sampleNotifications = [
     {
       id: 'notif-1',
-      title: 'RDS Multi-AZ Synchronous Replication Active',
+      title: 'RDS Multi-AZ Standby Synchronized (Simulated)',
       time: '10m ago',
       type: 'success',
-      desc: 'Standby instance in ap-south-1b verified healthy.'
+      desc: 'Standby instance in simulated ap-south-1b verified healthy.'
     },
     {
       id: 'notif-2',
-      title: 'Site-to-Site VPN Keepalive Verified',
+      title: 'Site-to-Site VPN Keepalive Active (Simulated)',
       time: '25m ago',
       type: 'info',
-      desc: 'BGP session 65000 established with CVGU Bhubaneswar Campus.'
+      desc: 'BGP session 65000 established with CVGU Campus gateway.'
     },
     {
       id: 'notif-3',
-      title: 'CloudTrail Audit Stream Synced',
+      title: 'CloudTrail Audit Stream Ingesting (Simulated)',
       time: '1h ago',
       type: 'info',
       desc: 'Immutable logs exported to encrypted S3 audit bucket.'
     }
   ];
+
+  const initials = currentUser
+    ? currentUser.fullName
+        .split(' ')
+        .filter(Boolean)
+        .map(n => n[0])
+        .slice(0, 2)
+        .join('')
+        .toUpperCase()
+    : 'GU';
 
   return (
     <header className="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 md:px-6 flex items-center justify-between z-30 shrink-0 select-none font-sans transition-colors duration-150">
@@ -108,17 +121,18 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Right: Status Indicator, Theme Toggle, Notifications, User Menu, Simulation */}
       <div className="flex items-center gap-2.5">
         
-        {/* System Operational Indicator */}
+        {/* Simulation Status Indicator */}
         <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#ECFDF5] dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/40 text-xs font-mono">
           <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
-          <span className="text-[#059669] dark:text-emerald-400 font-semibold">All Systems Operational</span>
-          <span className="text-[10px] text-emerald-600 dark:text-emerald-500">ap-south-1</span>
+          <span className="text-[#059669] dark:text-emerald-400 font-semibold">Simulation Status: Healthy</span>
+          <span className="text-[10px] text-emerald-600 dark:text-emerald-500">ap-south-1 (Simulated)</span>
         </div>
 
         {/* Validation Score Pill */}
         <button
           onClick={onOpenValidation}
           className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 hover:bg-blue-100 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-medium border border-blue-200 dark:border-blue-800/40 transition"
+          title="Case Study Requirements: 12/12 Represented"
         >
           <CheckCircle2 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
           <span className="hidden md:inline text-blue-600/80 dark:text-blue-300/80">Compliance:</span>
@@ -158,7 +172,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {notificationsOpen && (
             <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-4 space-y-3 z-50 text-xs">
               <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
-                <span className="font-bold text-slate-900 dark:text-white">System Notifications</span>
+                <span className="font-bold text-slate-900 dark:text-white">Simulated Telemetry Alerts</span>
                 <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-blue-50 text-blue-600 dark:bg-blue-950 dark:text-blue-400">3 unread</span>
               </div>
 
@@ -184,7 +198,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           )}
         </div>
 
-        {/* Simulate Request Shortcut (University Blue) */}
+        {/* Simulate Request Shortcut */}
         <button
           onClick={onOpenRequestSim}
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#2563EB] hover:bg-blue-700 text-white text-xs font-semibold transition shadow-sm active:scale-95"
@@ -193,7 +207,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <span className="hidden sm:inline">Simulate</span> Request
         </button>
 
-        {/* Campus Portal Workspace Switcher (Soft Pastel Green) */}
+        {/* Campus Portal Workspace Switcher */}
         {onOpenPortal && (
           <button
             onClick={onOpenPortal}
@@ -205,19 +219,38 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
         )}
 
-        {/* User Profile Menu */}
-        <div className="relative">
+        {/* User Profile & Logout Group (CENTRALIZED USER IDENTITY) */}
+        <div className="relative flex items-center gap-1.5">
           <button
             onClick={onOpenProfile}
             className="flex items-center gap-2 p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition"
+            title="View authenticated profile and permissions"
           >
-            <div className="w-7 h-7 rounded-lg bg-blue-100 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 flex items-center justify-center font-bold font-mono text-blue-700 dark:text-blue-300 text-xs">
-              AD
+            <div className={`w-7 h-7 rounded-lg border flex items-center justify-center font-bold font-mono text-xs ${
+              currentUser?.role === 'ADMINISTRATOR'
+                ? 'bg-purple-100 dark:bg-purple-950 border-purple-200 dark:border-purple-800 text-purple-700 dark:text-purple-300'
+                : currentUser?.role === 'FACULTY'
+                ? 'bg-amber-100 dark:bg-amber-950 border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-300'
+                : 'bg-blue-100 dark:bg-blue-950 border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300'
+            }`}>
+              {initials}
             </div>
             <div className="hidden lg:block text-left text-xs">
-              <p className="font-bold text-slate-900 dark:text-white leading-tight">Prof. S. K. Mohapatra</p>
-              <p className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">Administrator</p>
+              <p className="font-bold text-slate-900 dark:text-white leading-tight truncate max-w-[130px]">
+                {currentUser ? currentUser.fullName : 'Guest Session'}
+              </p>
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 font-mono capitalize">
+                {currentUser ? currentUser.role.toLowerCase() : 'Unauthenticated'}
+              </p>
             </div>
+          </button>
+
+          <button
+            onClick={() => logout()}
+            className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition"
+            title="Sign out of demo session"
+          >
+            <LogOut className="w-3.5 h-3.5" />
           </button>
         </div>
 

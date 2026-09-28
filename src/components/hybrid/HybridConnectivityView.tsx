@@ -72,39 +72,39 @@ export const HybridConnectivityView: React.FC = () => {
           </span>
         </div>
 
-        {/* Real-Time Tunnel Telemetry Bar with Pastel Cards */}
+        {/* Simulated Tunnel Telemetry Bar with Pastel Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-2 shadow-xs">
             <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-              <span>Tunnel 1 (Primary)</span>
+              <span>Tunnel 1 (Primary Simulated)</span>
               <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
             </div>
             <div className="text-xl font-bold text-[#059669] dark:text-emerald-400 font-mono">UP / ACTIVE</div>
             <p className="text-[10px] font-mono text-slate-500 dark:text-slate-400">
-              IP: 3.109.112.45 ↔ 203.129.214.10
+              IP: 3.109.112.45 ↔ 203.129.214.10 (Simulated)
             </p>
             <div className="text-[10px] text-slate-400 dark:text-slate-500 font-mono border-t border-slate-100 dark:border-slate-800 pt-1">
-              Latency: 14ms · 0.00% Loss
+              Latency: 14ms (Simulated) · 0.00% Loss
             </div>
           </div>
 
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-2 shadow-xs">
             <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-              <span>Tunnel 2 (Standby)</span>
+              <span>Tunnel 2 (Standby Simulated)</span>
               <span className="w-2 h-2 rounded-full bg-[#10B981]" />
             </div>
             <div className="text-xl font-bold text-slate-700 dark:text-slate-200 font-mono">UP / STANDBY</div>
             <p className="text-[10px] font-mono text-slate-500 dark:text-slate-400">
-              IP: 3.109.112.46 ↔ 203.129.214.11
+              IP: 3.109.112.46 ↔ 203.129.214.11 (Simulated)
             </p>
             <div className="text-[10px] text-slate-400 dark:text-slate-500 font-mono border-t border-slate-100 dark:border-slate-800 pt-1">
-              Automated Failover Armed
+              Automated Failover Armed (Simulated)
             </div>
           </div>
 
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-2 shadow-xs">
             <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-              <span>BGP Peering</span>
+              <span>BGP Peering (Simulated)</span>
               <Activity className="w-4 h-4 text-purple-600 dark:text-purple-400" />
             </div>
             <div className="text-xl font-bold text-purple-700 dark:text-purple-300 font-mono">ESTABLISHED</div>
@@ -126,7 +126,7 @@ export const HybridConnectivityView: React.FC = () => {
               SHA-384 · DH Group 14 (2048-bit)
             </p>
             <div className="text-[10px] text-slate-400 dark:text-slate-500 font-mono border-t border-slate-100 dark:border-slate-800 pt-1">
-              IKEv2 SA Lifetime: 28,800s
+              IKEv2 SA Lifetime: 28,800s (Simulated)
             </div>
           </div>
         </div>

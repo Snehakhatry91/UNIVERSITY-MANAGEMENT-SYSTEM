@@ -172,50 +172,50 @@ export const MonitoringView: React.FC = () => {
               <span>C. V. Raman Global University · Telemetry &amp; SIEM Operations</span>
             </div>
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-              Central Monitoring &amp; Security Auditing (SIEM)
+              Central Monitoring &amp; Security Auditing (Simulated SIEM)
             </h1>
             <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 max-w-3xl leading-relaxed">
-              Consolidated observability stream aggregating Network, Identity, Security, Authentication, VPN, and Application events into a tamper-evident audit log.
+              Consolidated simulated observability stream aggregating synthetic Network, Identity, Security, Authentication, VPN, and Application events (Requirement 12).
             </p>
           </div>
 
           {/* Local Simulation Disclaimer Banner */}
           <div className="px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-slate-900 border border-emerald-200 dark:border-emerald-500/40 text-emerald-800 dark:text-emerald-300 text-xs font-mono flex items-center gap-2 shadow-xs">
             <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-            <span>LOCAL SIMULATION ONLY · ZERO CLOUD RUNTIME BILLING</span>
+            <span>EDUCATIONAL LOCAL SIMULATION · ZERO CLOUD RUNTIME BILLING</span>
           </div>
         </div>
 
         {/* 4 Summary Telemetry Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-1 shadow-xs">
-            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Ingested Event Rate</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Ingested Event Rate (Simulated)</span>
             <div className="text-2xl font-bold text-slate-900 dark:text-white font-mono">14,892 / hr</div>
-            <div className="text-[11px] text-[#059669] dark:text-emerald-400 font-medium flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" /> 100% Ingestion Health
+            <div className="text-[11px] text-[#059669] dark:text-emerald-400 font-medium flex items-center gap-1 font-mono">
+              <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" /> Simulation Ingestion Active
             </div>
           </div>
 
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-1 shadow-xs">
             <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Active Observability Alarms</span>
             <div className="text-2xl font-bold text-amber-600 dark:text-amber-400 font-mono">{activeAlerts.length} Active</div>
-            <div className="text-[11px] text-slate-500 dark:text-slate-400">1 Critical · 1 Warning · 1 Info</div>
+            <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">1 Critical · 1 Warning · 1 Info</div>
           </div>
 
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-1 shadow-xs">
             <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Mean Time to Detect (MTTD)</span>
             <div className="text-2xl font-bold text-blue-600 dark:text-blue-400 font-mono">&lt; 1.2s</div>
-            <div className="text-[11px] text-slate-500 dark:text-slate-400">Automated Metric Alarms</div>
+            <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">Simulated Automated Alarms</div>
           </div>
 
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-1 shadow-xs">
-            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Target Availability SLA</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Target Availability Objective</span>
             <div className="text-2xl font-bold text-[#059669] dark:text-emerald-400 font-mono">99.98%</div>
-            <div className="text-[11px] text-[#059669] dark:text-emerald-400">All Tiers Operational</div>
+            <div className="text-[11px] text-[#059669] dark:text-emerald-400 font-mono">Simulated Architecture SLA</div>
           </div>
         </div>
 
-        {/* Live System Metric Gauges */}
+        {/* Simulated System Metric Gauges */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-2 shadow-xs">
             <div className="flex items-center justify-between text-xs">

@@ -24,14 +24,27 @@ This project addresses these challenges by architecting a secure, highly availab
   {
     id: 'project-objectives',
     number: 2,
-    title: 'Project Objectives',
+    title: 'Project Objectives & Dual Framework Alignment',
     category: 'Foundation',
     content: `The primary objectives of this architecture are:
 
-- **Architect a 3-Tier Zero-Trust Cloud VPC:** Partition workloads into Public Ingress, Private Compute, and Strictly Isolated Database tiers.
-- **Implement Robust Hybrid Connectivity:** Connect modern cloud microservices to heritage campus systems via redundant IPSec Site-to-Site VPN tunnels without exposing internal subnets.
-- **Establish Federated Identity & SSO:** Enable seamless, single-session authentication for students and faculty across LMS, ERP, SMS, and Library via SAML 2.0 / OIDC federation.
-- **Enforce Defense-in-Depth Security:** Guarantee least privilege via granular RBAC, mandatory MFA for privileged workflows, AES-256 encryption at rest, and TLS 1.3 in transit.
+- **Fulfill 12 Mandatory Case-Study Requirements:**
+  1. *VPC/VNet Subnets:* Dedicated Public, Application, and Database subnets with strict routing.
+  2. *Edge CDN:* Edge-cached static content delivery (images, videos, CSS, JavaScript) to reduce origin compute load.
+  3. *Load Balancing:* Application Load Balancer distributing requests across multiple application servers (Instances 1, 2, 3).
+  4. *Security Groups & Port Control:* Controlled tier-to-tier communication (443 → 8080 → 5432).
+  5. *Isolated Private Database:* Zero public IP, zero direct internet ingress, isolated inside database subnet.
+  6. *Hybrid Connectivity:* Redundant Site-to-Site IPSec VPN linking Cloud VPC to University Campus Data Center.
+  7. *Cloud IAM:* Distinct policies for Students, Faculty, Administrators, and Machine Workloads.
+  8. *Role-Based Access Control (RBAC):* Granular least-privilege permission matrix across human and workload roles.
+  9. *Identity Provider Federation:* Active Directory/LDAP federation with SAML 2.0 / OIDC assertion exchange.
+  10. *Single Sign-On (SSO):* Unified university credentials granting access to LMS, ERP, Library, and Student Portals.
+  11. *Multi-Factor Authentication (MFA):* Mandatory TOTP/FIDO2 MFA for privileged roles (Faculty and Administrators).
+  12. *Monitoring & Logging:* Centralized SIEM telemetry aggregating Network, Identity, App, and Database events.
+
+- **Enforce 15 Independent Defensive Security Controls:**
+  15 supporting security controls (SEC-01 to SEC-15) providing defense-in-depth across Network, Identity, Database, Access Control, MFA, Logging, Monitoring, and Hybrid Security. Both the 12 requirements and 15 controls are kept independent.
+
 - **Ensure ₹0 Cost & Local Reproducibility:** Deliver a complete, interactive architecture platform that runs locally without cloud account costs or API keys.`
   },
   {

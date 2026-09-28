@@ -31,17 +31,17 @@ export const ValidationView: React.FC = () => {
         <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-8 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="space-y-1.5">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#ECFDF5] text-[#059669] border border-emerald-200 dark:bg-emerald-950 dark:text-emerald-400 dark:border-emerald-800/40">
-                  Audit Verified · Educational Cloud Blueprint
+                  Internal Case-Study Validation · Educational Cloud Simulation
                 </span>
-                <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">ISO/IEC 27001 &amp; AWS Well-Architected</span>
+                <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">Architecture Requirement Verification</span>
               </div>
               <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
                 Case Study Compliance Verification
               </h1>
               <p className="text-sm text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
-                C. V. Raman Global University · Architectural audit confirming that every mandatory requirement from the case study specification is fully implemented and visibly represented.
+                C. V. Raman Global University · Architecture verification confirming that every mandatory requirement from the case study specification is fully implemented and visibly represented.
               </p>
             </div>
 
@@ -51,11 +51,26 @@ export const ValidationView: React.FC = () => {
                 <Award className="w-6 h-6" />
               </div>
               <div>
-                <div className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">Overall Score</div>
+                <div className="text-[11px] font-mono uppercase tracking-wider text-slate-500 dark:text-slate-400">Requirements Check</div>
                 <div className="text-2xl font-extrabold text-slate-900 dark:text-white font-mono">12 / 12</div>
-                <div className="text-[11px] text-[#047857] dark:text-emerald-400 font-semibold font-mono">100% Satisfied</div>
+                <div className="text-[11px] text-[#047857] dark:text-emerald-400 font-semibold font-mono">All Represented</div>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Dual Compliance Architecture Model Notice */}
+        <div className="p-4 rounded-xl bg-blue-50/60 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/40 text-xs flex items-start gap-3">
+          <div className="space-y-1">
+            <span className="font-bold text-slate-900 dark:text-white">
+              Compliance Framework Clarification:
+            </span>
+            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+              <strong>12 mandatory case-study requirements + 15 supporting security controls.</strong> Both frameworks are tracked independently. The 12 case study specifications cover (1) 3-tier VPC Subnets, (2) Edge CDN, (3) Multi-Server Load Balancing, (4) Security Groups &amp; Port Controls, (5) Isolated Private Database, (6) Hybrid Site-to-Site VPN, (7) IAM Principals, (8) RBAC, (9) Campus IdP Federation, (10) SSO Portals, (11) MFA Enforcement, and (12) Monitoring &amp; SIEM Telemetry.
+            </p>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono mt-1">
+              Educational Simulation Note: Derived from internal verification checks. Does not imply external third-party ISO, SOC 2, or commercial AWS certification.
+            </p>
           </div>
         </div>
 

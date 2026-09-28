@@ -11,8 +11,10 @@ import {
   Users,
   Activity
 } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 export const CadArchitectureView: React.FC = () => {
+  const { currentUser } = useAuth();
   const sheetRef = useRef<HTMLDivElement>(null);
   const [isExporting, setIsExporting] = useState(false);
 
@@ -62,7 +64,7 @@ export const CadArchitectureView: React.FC = () => {
           <button
             onClick={handleExportPng}
             disabled={isExporting}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#2563EB] hover:bg-blue-700 text-white text-xs font-bold transition shadow-xs disabled:opacity-50"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#2563EB] hover:bg-blue-700 text-white text-xs font-bold transition shadow-xs disabled:opacity-50 cursor-pointer"
           >
             <Download className="w-3.5 h-3.5" />
             {isExporting ? 'Generating Blueprint...' : 'Export High-Res PNG'}
@@ -70,7 +72,7 @@ export const CadArchitectureView: React.FC = () => {
 
           <button
             onClick={handlePrint}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold border border-slate-200 dark:border-slate-700 transition shadow-xs"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold border border-slate-200 dark:border-slate-700 transition shadow-xs cursor-pointer"
           >
             <Printer className="w-3.5 h-3.5" />
             Print / PDF
@@ -107,7 +109,7 @@ export const CadArchitectureView: React.FC = () => {
                 DWG NO: CVRGU-HYBRID-ARCH-2026-01
               </span>
               <div className="text-slate-400 text-[11px]">
-                STATUS: <span className="text-emerald-400 font-bold">APPROVED / VERIFIED</span> | SHEET: 01 OF 01
+                STATUS: <span className="text-emerald-400 font-bold">DESIGN VALIDATED — EDUCATIONAL SIMULATION</span> | SHEET: 01 OF 01
               </div>
             </div>
           </div>
@@ -430,12 +432,18 @@ export const CadArchitectureView: React.FC = () => {
                 <span className="text-slate-300">{new Date().toISOString().split('T')[0]}</span>
               </div>
               <div className="flex justify-between border-b border-slate-800 pb-0.5">
+                <span className="text-slate-500 uppercase">REVIEWED BY:</span>
+                <span className="font-bold text-white truncate">
+                  {currentUser ? `${currentUser.fullName} (${currentUser.role})` : 'Administrator (ADMINISTRATOR)'}
+                </span>
+              </div>
+              <div className="flex justify-between border-b border-slate-800 pb-0.5">
                 <span className="text-slate-500 uppercase">COMPLIANCE:</span>
-                <span className="text-emerald-400 font-bold">12 / 12 REQUIREMENTS VERIFIED</span>
+                <span className="text-emerald-400 font-bold">12 / 12 REQUIREMENTS REPRESENTED</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500 uppercase">REV:</span>
-                <span className="text-emerald-400 font-bold">1.0.0 (FINAL SUBMISSION)</span>
+                <span className="text-slate-500 uppercase">STATUS:</span>
+                <span className="text-cyan-300 font-bold">INTERNAL REQUIREMENTS REVIEW</span>
               </div>
             </div>
           </div>

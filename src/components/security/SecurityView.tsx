@@ -73,6 +73,18 @@ export const SecurityView: React.FC = () => {
           </p>
         </div>
 
+        {/* Dual Compliance Architecture Model Notice */}
+        <div className="p-4 rounded-xl bg-blue-50/60 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/40 text-xs flex items-start gap-3">
+          <div className="space-y-1">
+            <span className="font-bold text-slate-900 dark:text-white">
+              Dual Framework Implementation:
+            </span>
+            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+              <strong>12 mandatory case-study requirements + 15 supporting security controls.</strong> The counts remain independent: this view indexes the 15 defensive security controls (SEC-01 to SEC-15), while the Validation view indexes the 12 case study specifications (REQ-01 to REQ-12).
+            </p>
+          </div>
+        </div>
+
         {/* 4 Security Posture Metric Cards with Pastel Accents */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 flex flex-col justify-between shadow-xs">
