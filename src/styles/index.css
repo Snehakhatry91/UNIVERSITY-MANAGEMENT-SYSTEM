@@ -1,0 +1,132 @@
+@import '@xyflow/react/dist/style.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-main: #F5F9FF;
+    --card-bg: #FFFFFF;
+    --border-color: #E2E8F0;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+    --brand-blue: #2563EB;
+  }
+
+  .dark {
+    --bg-main: #0F172A;
+    --card-bg: #1E293B;
+    --border-color: #334155;
+    --text-primary: #F8FAFC;
+    --text-secondary: #CBD5E1;
+    --text-muted: #94A3B8;
+    --brand-blue: #60A5FA;
+  }
+
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+}
+
+/* CAD Engineering Grid Background */
+.cad-blueprint-grid {
+  background-size: 30px 30px;
+  background-image: 
+    linear-gradient(to right, rgba(37, 99, 235, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(37, 99, 235, 0.08) 1px, transparent 1px);
+}
+
+.dark .cad-blueprint-grid {
+  background-image: 
+    linear-gradient(to right, rgba(56, 189, 248, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.06) 1px, transparent 1px);
+}
+
+.cad-engineering-sheet {
+  background-color: #F8FAFC;
+  background-image: 
+    radial-gradient(rgba(37, 99, 235, 0.12) 1px, transparent 0),
+    linear-gradient(to right, rgba(37, 99, 235, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(37, 99, 235, 0.06) 1px, transparent 1px);
+  background-size: 20px 20px, 40px 40px, 40px 40px;
+}
+
+.dark .cad-engineering-sheet {
+  background-color: #0B1120;
+  background-image: 
+    radial-gradient(rgba(56, 189, 248, 0.12) 1px, transparent 0),
+    linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+}
+
+/* React Flow customizations */
+.react-flow__attribution {
+  display: none !important;
+}
+
+.react-flow__handle {
+  width: 8px;
+  height: 8px;
+  background-color: #2563EB;
+  border: 2px solid #FFFFFF;
+}
+
+.dark .react-flow__handle {
+  background-color: #60A5FA;
+  border: 2px solid #0F172A;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #0F172A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Print optimizations for CAD Engineering sheet */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .cad-engineering-sheet {
+    background: white !important;
+    color: black !important;
+    border: 2px solid #000 !important;
+  }
+}

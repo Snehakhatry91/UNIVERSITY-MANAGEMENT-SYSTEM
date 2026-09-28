@@ -1,0 +1,206 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  C. V. Raman Global University (CVGU)
+  Secure Hybrid Cloud-Based University Management System
+  Production CloudFormation Architecture Template (ap-south-1)
+
+Parameters:
+  EnvironmentName:
+    Description: Environment tier designation
+    Type: String
+    Default: Production
+
+  VpcCIDR:
+    Description: Primary CIDR block for CVGU Production VPC
+    Type: String
+    Default: 10.0.0.0/16
+
+  OnPremisesCIDR:
+    Description: CVGU Bhubaneswar Campus Data Center Network
+    Type: String
+    Default: 172.16.0.0/16
+
+Resources:
+  # ============================================================================
+  # 1. VPC & MULTI-AZ SUBNETS
+  # ============================================================================
+  CvguVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VpcCIDR
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: cvgu-production-vpc
+        - Key: Institution
+          Value: C. V. Raman Global University
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: cvgu-igw
+
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref CvguVPC
+      InternetGatewayId: !Ref InternetGateway
+
+  # Public Subnets (AZ-A & AZ-B)
+  PublicSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref CvguVPC
+      CidrBlock: 10.0.0.0/24
+      AvailabilityZone: ap-south-1a
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: cvgu-public-subnet-az-a
+
+  PublicSubnetB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref CvguVPC
+      CidrBlock: 10.0.128.0/24
+      AvailabilityZone: ap-south-1b
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: cvgu-public-subnet-az-b
+
+  # Private Application Subnets (AZ-A & AZ-B)
+  PrivateAppSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref CvguVPC
+      CidrBlock: 10.0.1.0/24
+      AvailabilityZone: ap-south-1a
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: cvgu-private-app-subnet-az-a
+
+  PrivateAppSubnetB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref CvguVPC
+      CidrBlock: 10.0.2.0/24
+      AvailabilityZone: ap-south-1b
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: cvgu-private-app-subnet-az-b
+
+  # Isolated Database Subnets (AZ-A & AZ-B)
+  PrivateDbSubnetA:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref CvguVPC
+      CidrBlock: 10.0.10.0/24
+      AvailabilityZone: ap-south-1a
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: cvgu-isolated-db-subnet-az-a
+
+  PrivateDbSubnetB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref CvguVPC
+      CidrBlock: 10.0.11.0/24
+      AvailabilityZone: ap-south-1b
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: cvgu-isolated-db-subnet-az-b
+
+  # ============================================================================
+  # 2. SECURITY GROUPS (ZERO TRUST ISOLATION)
+  # ============================================================================
+  AlbSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Public ALB ingress for HTTPS
+      VpcId: !Ref CvguVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+
+  AppSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Accepts traffic only from ALB
+      VpcId: !Ref CvguVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 8080
+          ToPort: 8080
+          SourceSecurityGroupId: !Ref AlbSecurityGroup
+
+  DbSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Accepts PostgreSQL 5432 strictly from App Fleet
+      VpcId: !Ref CvguVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 5432
+          ToPort: 5432
+          SourceSecurityGroupId: !Ref AppSecurityGroup
+
+  # ============================================================================
+  # 3. APPLICATION LOAD BALANCER & TARGET GROUP
+  # ============================================================================
+  ApplicationLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: cvgu-cfn-alb
+      Scheme: internet-facing
+      Subnets:
+        - !Ref PublicSubnetA
+        - !Ref PublicSubnetB
+      SecurityGroups:
+        - !Ref AlbSecurityGroup
+
+  AppTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: cvgu-cfn-app-tg
+      Port: 8080
+      Protocol: HTTP
+      VpcId: !Ref CvguVPC
+      TargetType: instance
+      HealthCheckPath: /api/health
+      HealthCheckIntervalSeconds: 15
+      HealthyThresholdCount: 3
+      UnhealthyThresholdCount: 2
+
+  # ============================================================================
+  # 4. RDS DATABASE SUBNET GROUP
+  # ============================================================================
+  RdsSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: Multi-AZ isolated database subnet group
+      SubnetIds:
+        - !Ref PrivateDbSubnetA
+        - !Ref PrivateDbSubnetB
+
+Outputs:
+  VpcId:
+    Description: Production VPC ID
+    Value: !Ref CvguVPC
+
+  AlbDNSName:
+    Description: DNS of the Application Load Balancer
+    Value: !GetAtt ApplicationLoadBalancer.DNSName
