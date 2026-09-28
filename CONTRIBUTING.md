@@ -23,8 +23,8 @@ We are committed to providing a welcoming, inclusive, and harassment-free experi
 1. **Fork the repository** on GitHub.
 2. **Clone your fork locally**:
    ```bash
-   git clone https://github.com/<your-username>/CAD_PROJECT.git
-   cd CAD_PROJECT
+   git clone https://github.com/Snehakhatry91/UNIVERSITY-MANAGEMENT-SYSTEM.git
+   cd UNIVERSITY-MANAGEMENT-SYSTEM
    ```
 3. **Install project dependencies**:
    ```bash

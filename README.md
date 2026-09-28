@@ -295,9 +295,8 @@ git init -b main
 git add .
 git commit -m "feat: complete secure hybrid cloud architecture platform"
 
-# Create a new repository on GitHub (e.g. named 'CAD_PROJECT' or 'cvgu-hybrid-cloud')
 # Link your remote repository and push
-git remote add origin https://github.com/<YOUR_GITHUB_USERNAME>/<REPO_NAME>.git
+git remote add origin https://github.com/Snehakhatry91/UNIVERSITY-MANAGEMENT-SYSTEM.git
 git branch -M main
 git push -u origin main
 ```
