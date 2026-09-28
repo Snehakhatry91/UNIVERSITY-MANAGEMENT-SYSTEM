@@ -7,6 +7,7 @@
 [![Terraform](https://img.shields.io/badge/Terraform-1.7-844FBA?logo=terraform&logoColor=white)](https://www.terraform.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FSnehakhatry91%2FUNIVERSITY-MANAGEMENT-SYSTEM)
 
 > **Interactive Cloud Architecture, Security and Identity Visualization Platform**  
 > *Developed for University Academic & Cloud Engineering Demonstration — 100% Free & Offline-First (₹0 Cost)*
@@ -243,7 +244,8 @@ CAD_PROJECT/
 ├── SECURITY.md               # Security policy & vulnerability reporting guide
 ├── tailwind.config.js        # Tailwind CSS design system configuration
 ├── tsconfig.json             # TypeScript compiler configuration
-└── vite.config.ts            # Vite bundler configuration
+├── vercel.json               # Vercel deployment config (SPA rewrites & security headers)
+└── vite.config.ts            # Vite bundler configuration (optimized chunking)
 ```
 
 ---
@@ -299,6 +301,34 @@ git commit -m "feat: complete secure hybrid cloud architecture platform"
 git remote add origin https://github.com/Snehakhatry91/UNIVERSITY-MANAGEMENT-SYSTEM.git
 git branch -M main
 git push -u origin main
+```
+
+---
+
+## Deploying to Vercel
+
+This repository is pre-configured with [`vercel.json`](vercel.json) for instantaneous, zero-configuration deployment to **Vercel** with full SPA route rewrites, asset caching, and security headers.
+
+### Option A: Via Vercel Web Dashboard (Easiest)
+1. Go to [vercel.com](https://vercel.com/) and sign in with GitHub.
+2. Click **Add New...** → **Project**.
+3. Select and import **`Snehakhatry91/UNIVERSITY-MANAGEMENT-SYSTEM`**.
+4. Vercel automatically detects the Vite framework preset:
+   - **Framework Preset**: `Vite`
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+5. Click **Deploy**. Your interactive platform will be live globally in ~30 seconds!
+
+### Option B: Via Vercel CLI
+```bash
+# Install Vercel CLI globally
+npm i -g vercel
+
+# Deploy from repository root
+vercel
+
+# Deploy to production
+vercel --prod
 ```
 
 ---
